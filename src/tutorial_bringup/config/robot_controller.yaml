@@ -1,0 +1,40 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 10
+
+    velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # forward_position_controller:
+    #   type: forward_command_controller/ForwardCommandController
+
+    imu_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster
+
+    effort_controller:
+      type: effort_controllers/JointGroupEffortController
+
+effort_controller:
+  ros__parameters:
+    joints:
+      - first_joint
+
+velocity_controller:
+    ros__parameters:
+      joints:
+        - first_joint
+
+# forward_position_controller:
+#   ros__parameters:
+#     joints:
+#       - first_joint
+#     interface_name: position
+
+imu_broadcaster:
+  ros__parameters:
+
+    sensor_name: link2_imu
+    frame_id: imu_link

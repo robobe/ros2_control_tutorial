@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="Two axis URDF">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0058038 -0.11499 -0.018823"
+        rpy="0 0 0" />
+      <mass
+        value="0.98158" />
+      <inertia
+        ixx="0.0019367"
+        ixy="-2.0105E-05"
+        ixz="8.1983E-05"
+        iyy="0.0031244"
+        iyz="-2.7076E-05"
+        izz="0.0048287" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://two_axis_description/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://two_axis_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="Middle_link">
+    <inertial>
+      <origin
+        xyz="0.040508 0.00060933 0.043297"
+        rpy="0 0 0" />
+      <mass
+        value="0.072016" />
+      <inertia
+        ixx="5.9313E-05"
+        ixy="-6.18E-07"
+        ixz="-3.6125E-05"
+        iyy="0.00010104"
+        iyz="-5.5296E-07"
+        izz="6.1442E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://two_axis_description/meshes/Middle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://two_axis_description/meshes/Middle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_1"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="Middle_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="0.147"
+      velocity="87" />
+  </joint>
+  <link
+    name="Last_link">
+    <inertial>
+      <origin
+        xyz="0.031721 -0.031629 0.085647"
+        rpy="0 0 0" />
+      <mass
+        value="0.10335" />
+      <inertia
+        ixx="5.8739E-05"
+        ixy="-1.5962E-05"
+        ixz="-2.4139E-07"
+        iyy="8.1004E-05"
+        iyz="4.185E-08"
+        izz="7.8529E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://two_axis_description/meshes/Last_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://two_axis_description/meshes/Last_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint_2"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="Middle_link" />
+    <child
+      link="Last_link" />
+    <axis
+      xyz="-0.99989 -0.015041 0" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="0.147"
+      velocity="87" />
+  </joint>
+</robot>

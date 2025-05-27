@@ -1,0 +1,13 @@
+session_name: visual
+windows:
+  - window_name: my_window
+    layout: tiled
+    suppress_history: false
+    shell_command_before:
+      - source install/setup.bash
+    panes:
+      - shell_command: 
+          - printf '\033]2;%s\033\\' 'rviz'
+          - ros2 launch tutorial_bringup display.launch.py
+        focus: true
+      

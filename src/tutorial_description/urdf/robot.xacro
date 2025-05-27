@@ -1,0 +1,134 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="simple_robot">
+    <xacro:include filename="parameters.xacro" />
+    <xacro:include filename="gazebo.xacro" />
+
+    <link name="world" />
+
+    <joint name="fixed_joint" type="fixed">
+        <parent link="world" />
+        <child link="first_link" />
+    </joint>
+
+    <link name="first_link">
+        <xacro:inertia_body />
+
+        <visual>
+            <origin xyz="0.0 0.0 ${s}" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${a} ${b} ${c}" />
+            </geometry>
+            <material name="red" />
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 ${s}" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${a} ${b} ${c}" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="first_joint" type="revolute">
+        <origin xyz="0.0 ${b} ${q}" rpy="0.0 0.0 0.0" />
+        <parent link="first_link" />
+        <child link="second_link" />
+        <axis xyz="0 1 0" />
+        <limit lower="-1.5" upper="1.5" effort="5000.0" velocity="10.0" />
+        <dynamics damping="1.0" friction="1.0" />
+    </joint>
+
+    <link name="second_link">
+        <xacro:inertia_body />
+
+        <visual>
+            <origin xyz="0.0 0.0 ${s}" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${a} ${b} ${c}" />
+            </geometry>
+            <material name="blue" />
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 ${s}" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${a} ${b} ${c}" />
+            </geometry>
+        </collision>
+
+    </link>
+
+
+    <link name="imu_link">
+        <inertial>
+            <mass value="0.01" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia
+                ixx="1e-5" iyy="1e-5" izz="1e-5"
+                ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+
+        <visual>
+            <origin xyz="0.0 0.0 0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="0.1 0.1 0.1" />
+            </geometry>
+            <material name="green" />
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="0.1 0.1 0.1" />
+            </geometry>
+        </collision>
+
+    </link>
+
+    <joint name="imu_joint" type="fixed">
+        <origin xyz="0.0 0.1 ${c}" rpy="0.0 0.0 0.0" />
+        <parent link="second_link" />
+        <child link="imu_link" />
+    </joint>
+
+    <!-- #################################################### -->
+    <!-- control plugin and definition -->
+    <ros2_control name="robot" type="system">
+        <hardware>
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </hardware>
+
+        <joint name="first_joint">
+            <!-- <command_interface name="position">
+                <param name="min">-1.571</param>
+                <param name="max">1.571</param>
+            </command_interface> -->
+
+            <!-- <command_interface name="velocity">
+                <param name="min">-2.0</param>
+                <param name="max">2.0</param>
+            </command_interface> -->
+
+            <command_interface name="effort">
+                <param name="min">-2.0</param>
+                <param name="max">2.0</param>
+            </command_interface>
+
+            <state_interface name="position" />
+        </joint>
+
+        <sensor name="link2_imu">
+            <state_interface name="orientation.x" />
+            <state_interface name="orientation.y" />
+            <state_interface name="orientation.z" />
+            <state_interface name="orientation.w" />
+            <state_interface name="angular_velocity.x" />
+            <state_interface name="angular_velocity.y" />
+            <state_interface name="angular_velocity.z" />
+            <state_interface name="linear_acceleration.x" />
+            <state_interface name="linear_acceleration.y" />
+            <state_interface name="linear_acceleration.z" />
+            <!-- <param name="frame_id">second_link</param> -->
+        </sensor>
+
+    </ros2_control>
+    <!-- #################################################### -->
+</robot>

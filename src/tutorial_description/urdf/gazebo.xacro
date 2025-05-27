@@ -1,0 +1,32 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <gazebo>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <parameters>
+                $(find tutorial_bringup)/config/robot_controller.yaml
+            </parameters>
+        </plugin>
+
+    </gazebo>
+
+    <gazebo reference="first_link">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Red</material>
+    </gazebo>
+
+    <gazebo reference="second_link">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <gazebo reference="imu_link">
+        <sensor name="link2_imu" type="imu">
+            <always_on>1</always_on>
+            <update_rate>50</update_rate>
+            <visualize>true</visualize>
+            <topic>imu-control</topic>
+            <enable_metrics>true</enable_metrics>
+        </sensor>
+    </gazebo>
+</robot>
