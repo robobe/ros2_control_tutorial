@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by
+Stephen Brawner (brawner@gmail.com) 
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="two_axis">
-  <link name="world"></link>
+  <!-- <link name="world"></link>
   <joint name="world2base" type="fixed">
-    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-    <parent link="world"/>
-    <child link="base_link"/>
-    <axis xyz="0.0 0.0 0.0"/>
-    <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
-  </joint>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <parent link="world" />
+    <child link="base_link" />
+    <axis xyz="0.0 0.0 0.0" />
+    <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0" />
+  </joint> -->
   <link
     name="base_link">
     <inertial>
       <origin
-        xyz="0.0058056 -0.11502 -0.018827"
-        rpy="0 1.575 0 " />
+        xyz="0 0 1.5"
+        rpy="1.575 0 0" />
       <mass
         value="1.0009" />
       <inertia
@@ -30,11 +31,11 @@
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0.5"
+        xyz="0 0 1.5"
         rpy="1.575 0 0" />
       <geometry>
         <mesh
-          filename="package://two_axis_description/meshes/base_link.STL" scale="0.01 0.01 0.01"/>
+          filename="package://two_axis_description/meshes/base_link.STL" scale="0.01 0.01 0.01" />
       </geometry>
       <material
         name="">
@@ -44,11 +45,11 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        xyz="0 0 1.5"
+        rpy="1.575 0 0" />
       <geometry>
         <mesh
-          filename="package://two_axis_description/meshes/base_link.STL" />
+          filename="package://two_axis_description/meshes/base_link.STL" scale="0.01 0.01 0.01" />
       </geometry>
     </collision>
   </link>
@@ -71,7 +72,7 @@
         rpy="1.575 -1.575 0" />
       <geometry>
         <mesh
-          filename="package://two_axis_description/meshes/link_1.STL" scale="0.01 0.01 0.01"/>
+          filename="package://two_axis_description/meshes/link_1.STL" scale="0.01 0.01 0.01" />
       </geometry>
       <material
         name="">
@@ -81,11 +82,11 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        xyz="0.0057 0.768 -0.2787"
+        rpy="1.575 -1.575 0" />
       <geometry>
         <mesh
-          filename="package://two_axis_description/meshes/link_1.STL" scale="0.01 0.01 0.01"/>
+          filename="package://two_axis_description/meshes/link_1.STL" scale="0.01 0.01 0.01" />
       </geometry>
     </collision>
   </link>
@@ -111,7 +112,7 @@
     name="Link_2">
     <inertial>
       <origin
-        xyz="-0.07 -0.18 0.0"
+        xyz="0.374 -0.118 0.001"
         rpy="0 0 0" />
       <mass
         value="0.13201" />
@@ -129,7 +130,7 @@
         rpy="0.0 0.0 0.0" />
       <geometry>
         <mesh
-          filename="package://two_axis_description/meshes/link_2.STL" scale="0.01 0.01 0.01"/>
+          filename="package://two_axis_description/meshes/link_2.STL" scale="0.01 0.01 0.01" />
       </geometry>
       <material
         name="">
@@ -139,11 +140,11 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+        xyz="0.374 -0.118 0.001"
+        rpy="0.0 0.0 0.0" />
       <geometry>
         <mesh
-          filename="package://two_axis_description/meshes/link_2.STL" />
+          filename="package://two_axis_description/meshes/link_2.STL" scale="0.01 0.01 0.01" />
       </geometry>
     </collision>
   </link>
@@ -165,4 +166,41 @@
       effort="0.147"
       velocity="87" />
   </joint>
+
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>
+        $(find two_axis_description)/config/effort_controllers.yaml
+      </parameters>
+    </plugin>
+
+  </gazebo>
+
+  <ros2_control name="robot" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+
+    <joint name="Joint_1">
+      <command_interface name="effort">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+    </joint>
+
+    <joint name="Joint_2">
+      <command_interface name="effort">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+    </joint>
+
+  </ros2_control>
+
 </robot>
