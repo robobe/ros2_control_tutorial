@@ -54,6 +54,7 @@ pose: {position: {x: 5.0}
 
 ```bash title="terminal1"
 source env.sh
+
 ros2 launch two_axis_description effort_control.launch.py
 ```
 

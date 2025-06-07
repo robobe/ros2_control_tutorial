@@ -25,9 +25,9 @@ class PIDController:
         self.min_limit = -200
         self.max_limit = 200
         self.error = 0
-        self.out_kp = 0.0
-        self.out_ki = 0.0
-        self.out_kd = 0.0
+        self.out_p = 0.0
+        self.out_i = 0.0
+        self.out_d = 0.0
 
     def reset(self):
         self.integral = 0.0
@@ -41,9 +41,9 @@ class PIDController:
         self.integral += self.error * dt * self.ki
         derivative = (self.error - self.prev_error) / dt if dt > 0 else 0.0
 
-        self.out_kp = self.kp * self.error
-        self.out_ki = self.ki * self.integral
-        self.out_kd = self.kd * derivative
+        self.out_p = self.kp * self.error
+        self.out_i = self.integral
+        self.out_d = self.kd * derivative
 
         output = self.kp * self.error + self.ki * self.integral + self.kd * derivative
         self.prev_error = self.error
@@ -58,7 +58,6 @@ class Controller(Node):
         super().__init__(node_name)
         self.controller = PIDController(4.0, 0.02, 0)
         
-        self.sub_imu = self.create_subscription(Imu, TOPIC_IMU, self.__imu_handler, qos_profile=qos_profile_system_default)
         self.sub_set_point = self.create_subscription(Float32, TOPIC_SET_POINT, self.__set_point_handler, qos_profile=qos_profile_system_default)
         self.sub_imu = self.create_subscription(Imu, TOPIC_IMU, self.__imu_handler, qos_profile=qos_profile_system_default)
         self.pub_effort = self.create_publisher(Float64MultiArray, TOPIC_VELOCITY_CMD, qos_profile=qos_profile_system_default)
@@ -122,8 +121,9 @@ class Controller(Node):
             xxx.data = [self.__set_point, 
                         self.controller.error, 
                         effort,
-                        self.controller,
-                        self.controller
+                        self.controller.out_p,
+                        self.controller.out_i,
+                        self.controller.out_d
                         ]
             self.pub_pid_output.publish(xxx)
 

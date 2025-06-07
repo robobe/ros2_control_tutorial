@@ -1,5 +1,8 @@
 FROM jazzy:allision
 
+RUN apt-key del F42ED6FBAB17C654
+RUN curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-xacro \
     ros-jazzy-ros2-control \
