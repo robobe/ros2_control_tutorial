@@ -9,8 +9,8 @@ from launch_ros.actions import Node
 import xacro
 
 PKG_BRINGUP = "tutorial_bringup"
-PKG_DESCRIPTION = "two_axis_description"
-ROBOT = "two_axis.urdf"
+PKG_DESCRIPTION = "tutorial_description"
+ROBOT = "robot.xacro"
 CONFIG = "config"
 URDF = "urdf"
 BRIDGE_CONFIG = "gz_bridge.yaml"
@@ -66,13 +66,6 @@ def generate_launch_description():
         output="screen",
     )
 
-    imu_broadcaster_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["imu_broadcaster"],
-        output="screen",
-    )
-
     gazebo_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
@@ -87,7 +80,6 @@ def generate_launch_description():
     ld.add_action(gz_spawn_entity)
     ld.add_action(gazebo_bridge)
     ld.add_action(control_spawner)
-    ld.add_action(imu_broadcaster_spawner)
     ld.add_action(joint_state_broadcaster_spawner)
 
     return ld

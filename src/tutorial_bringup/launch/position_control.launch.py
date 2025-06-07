@@ -2,15 +2,18 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
+from launch.substitutions import LaunchConfiguration, Command
+from launch_ros.parameter_descriptions import ParameterValue
 import xacro
+from pathlib import Path
 
 PKG_BRINGUP = "tutorial_bringup"
-PKG_DESCRIPTION = "two_axis_description"
-ROBOT = "two_axis.urdf"
+PKG_DESCRIPTION = "tutorial_description"
+ROBOT = "robot.xacro"
 CONFIG = "config"
 URDF = "urdf"
 BRIDGE_CONFIG = "gz_bridge.yaml"
@@ -62,14 +65,7 @@ def generate_launch_description():
     control_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["effort_controller"],
-        output="screen",
-    )
-
-    imu_broadcaster_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["imu_broadcaster"],
+        arguments=["position_controller"],
         output="screen",
     )
 
@@ -87,7 +83,6 @@ def generate_launch_description():
     ld.add_action(gz_spawn_entity)
     ld.add_action(gazebo_bridge)
     ld.add_action(control_spawner)
-    ld.add_action(imu_broadcaster_spawner)
     ld.add_action(joint_state_broadcaster_spawner)
 
     return ld

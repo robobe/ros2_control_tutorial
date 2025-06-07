@@ -105,8 +105,9 @@ Stephen Brawner (brawner@gmail.com)
     <limit
       lower="-1.57"
       upper="1.57"
-      effort="0.147"
+      effort="100"
       velocity="87" />
+      <dynamics damping="1.0" friction="1.0" />
   </joint>
   <link
     name="Link_2">
@@ -163,9 +164,21 @@ Stephen Brawner (brawner@gmail.com)
     <limit
       lower="-1.57"
       upper="1.57"
-      effort="0.147"
+      effort="100"
       velocity="87" />
+    <dynamics damping="1.0" friction="1.0" />
   </joint>
+
+
+  <gazebo reference="Link_2">
+        <sensor name="link2_imu" type="imu">
+            <always_on>1</always_on>
+            <update_rate>50</update_rate>
+            <visualize>true</visualize>
+            <topic>imu-control</topic>
+            <enable_metrics>true</enable_metrics>
+        </sensor>
+    </gazebo>
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
@@ -201,6 +214,19 @@ Stephen Brawner (brawner@gmail.com)
       <state_interface name="velocity" />
     </joint>
 
+    <sensor name="link2_imu">
+            <state_interface name="orientation.x" />
+            <state_interface name="orientation.y" />
+            <state_interface name="orientation.z" />
+            <state_interface name="orientation.w" />
+            <state_interface name="angular_velocity.x" />
+            <state_interface name="angular_velocity.y" />
+            <state_interface name="angular_velocity.z" />
+            <state_interface name="linear_acceleration.x" />
+            <state_interface name="linear_acceleration.y" />
+            <state_interface name="linear_acceleration.z" />
+        </sensor>
+        
   </ros2_control>
 
 </robot>

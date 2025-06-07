@@ -10,12 +10,20 @@ controller_manager:
 
     # forward_position_controller:
     #   type: forward_command_controller/ForwardCommandController
+    position_controller:
+      type: position_controllers/JointGroupPositionController
+
 
     imu_broadcaster:
       type: imu_sensor_broadcaster/IMUSensorBroadcaster
 
     effort_controller:
       type: effort_controllers/JointGroupEffortController
+
+position_controller:
+  ros__parameters:
+    joints:
+      - first_joint
 
 effort_controller:
   ros__parameters:

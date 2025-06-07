@@ -15,11 +15,11 @@ controller_manager:
 effort_controller:
   ros__parameters:
     joints:
-      - Joint_1
-      - Joint_2
+      - first_joint
+
 
 imu_broadcaster:
   ros__parameters:
 
     sensor_name: link2_imu
-    frame_id: Link_2
+    frame_id: imu_link

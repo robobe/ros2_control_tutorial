@@ -1,0 +1,9 @@
+<gazebo reference="imu_link">
+        <sensor name="link2_imu" type="imu">
+            <always_on>1</always_on>
+            <update_rate>50</update_rate>
+            <visualize>true</visualize>
+            <topic>imu-control</topic>
+            <enable_metrics>true</enable_metrics>
+        </sensor>
+    </gazebo>

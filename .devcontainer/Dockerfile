@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-ros-gz \
     ros-jazzy-joint-state-publisher-gui \
     ros-jazzy-ros-gz-bridge \
+    ros-jazzy-ros-gz-image \
+    python3-colcon-clean \
   && rm -rf /var/lib/apt/lists/*
 
 

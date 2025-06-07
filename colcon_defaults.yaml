@@ -3,7 +3,7 @@ build:
   symlink-install: true
   # Set build type (e.g., Release or Debug)
   cmake-args:
-    - "-DCMAKE_BUILD_TYPE=Release"
+    - "-DCMAKE_BUILD_TYPE=Debug"
 
 test:
   # Run tests in parallel

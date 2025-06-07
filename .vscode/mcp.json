@@ -1,0 +1,12 @@
+{
+    "servers": {
+        "ros": {
+            "type": "stdio",
+            "command": "/home/user/projects/mcp-demo/venv/bin/python",
+            "args": [
+                "/home/user/projects/mcp-demo/sqlite-server.py"
+            ]
+        }
+    }
+    
+}

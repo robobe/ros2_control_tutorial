@@ -1,7 +1,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="simple_robot">
     <xacro:include filename="parameters.xacro" />
     <xacro:include filename="gazebo.xacro" />
-
+    <xacro:include filename="effort_control.xacro" />
     <link name="world" />
 
     <joint name="fixed_joint" type="fixed">
@@ -80,7 +80,7 @@
                 <box size="0.1 0.1 0.1" />
             </geometry>
         </collision>
-
+        
     </link>
 
     <joint name="imu_joint" type="fixed">
@@ -91,21 +91,13 @@
 
     <!-- #################################################### -->
     <!-- control plugin and definition -->
-    <ros2_control name="robot" type="system">
+    <!-- <ros2_control name="robot" type="system">
         <hardware>
             <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </hardware>
 
         <joint name="first_joint">
-            <!-- <command_interface name="position">
-                <param name="min">-1.571</param>
-                <param name="max">1.571</param>
-            </command_interface> -->
-
-            <!-- <command_interface name="velocity">
-                <param name="min">-2.0</param>
-                <param name="max">2.0</param>
-            </command_interface> -->
+           
 
             <command_interface name="effort">
                 <param name="min">-2.0</param>
@@ -126,9 +118,8 @@
             <state_interface name="linear_acceleration.x" />
             <state_interface name="linear_acceleration.y" />
             <state_interface name="linear_acceleration.z" />
-            <!-- <param name="frame_id">second_link</param> -->
         </sensor>
 
-    </ros2_control>
+    </ros2_control> -->
     <!-- #################################################### -->
 </robot>

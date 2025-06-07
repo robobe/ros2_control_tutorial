@@ -17,6 +17,9 @@ ament_python_install_package(${PROJECT_NAME})
 
 set(NODES
 tutorial_application/my_control.py
+tutorial_application/camera_view.py
+tutorial_application/move_box.py
+tutorial_application/bk_subtract.py
 )
 
 install(PROGRAMS
