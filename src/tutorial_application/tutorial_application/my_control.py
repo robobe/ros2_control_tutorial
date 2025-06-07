@@ -25,6 +25,9 @@ class PIDController:
         self.min_limit = -200
         self.max_limit = 200
         self.error = 0
+        self.out_kp = 0.0
+        self.out_ki = 0.0
+        self.out_kd = 0.0
 
     def reset(self):
         self.integral = 0.0
@@ -37,6 +40,11 @@ class PIDController:
         self.error = setpoint - measurement
         self.integral += self.error * dt * self.ki
         derivative = (self.error - self.prev_error) / dt if dt > 0 else 0.0
+
+        self.out_kp = self.kp * self.error
+        self.out_ki = self.ki * self.integral
+        self.out_kd = self.kd * derivative
+
         output = self.kp * self.error + self.ki * self.integral + self.kd * derivative
         self.prev_error = self.error
         output = max(min(self.max_limit, output), self.min_limit)
@@ -110,7 +118,13 @@ class Controller(Node):
             self.get_logger().info(f"pid output: {effort}")
             self.__publish_effort(effort)
             xxx = Float32MultiArray()
-            xxx.data = [self.__set_point, self.controller.error, p]
+            # sp, error, output, p, i , d , 
+            xxx.data = [self.__set_point, 
+                        self.controller.error, 
+                        effort,
+                        self.controller,
+                        self.controller
+                        ]
             self.pub_pid_output.publish(xxx)
 
 
