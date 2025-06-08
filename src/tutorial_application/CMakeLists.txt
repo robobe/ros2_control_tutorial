@@ -20,6 +20,7 @@ tutorial_application/my_control.py
 tutorial_application/camera_view.py
 tutorial_application/move_box.py
 tutorial_application/bk_subtract.py
+tutorial_application/alter_setpoint.py
 )
 
 install(PROGRAMS

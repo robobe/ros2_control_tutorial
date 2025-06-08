@@ -53,22 +53,33 @@ pose: {position: {x: 5.0}
 ### Gimbal
 
 ```bash title="terminal1"
-source env.sh
-
 ros2 launch two_axis_description effort_control.launch.py
 ```
 
 ```bash title="terminal2"
-source env.sh
 ros2 run tutorial_application my_control.py
 ```
 
 ```bash title="terminal3"
-source env.sh
 ros2 topic pub -1 /set_point std_msgs/msg/Float32 "{ data: -1.0 }"
+#
+ros2 run tutorial_application alter_setpoint.py
 ```
 
-```bash title="terminal1"
-source env.sh
+```bash title="terminal4"
 rqt
+#
+```
+
+```bash title="terminal5"
+ros2 run plotjuggler plotjuggler -n
+#
+# # sp, error, output, p, i , d , pitch
+0: setpoint
+1: pid error
+2: pid output
+3: pid p output
+4: pid i output
+5: pid d output
+6: imu pitch
 ```

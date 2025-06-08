@@ -90,6 +90,7 @@ class Controller(Node):
         return SetParametersResult(successful=True)
     
     def __set_point_handler(self, msg: Float32):
+        self.controller.reset()
         self.__set_point = msg.data
         # self.get_logger().info(f"---- {self.__set_point} ---")
 
@@ -100,7 +101,7 @@ class Controller(Node):
             # self.get_logger().info("Published velocity command")
 
     def __imu_handler(self, msg: Imu):
-        r, p, y =  euler_from_quaternion([
+        r, pitch, y =  euler_from_quaternion([
             msg.orientation.x,
             msg.orientation.y,
             msg.orientation.z,
@@ -113,17 +114,18 @@ class Controller(Node):
 
         self.__last_time = self.get_clock().now()
         if self.__set_point is not None:
-            effort = self.controller.compute(self.__set_point, p, dt)
+            effort = self.controller.compute(self.__set_point, pitch, dt)
             self.get_logger().info(f"pid output: {effort}")
             self.__publish_effort(effort)
             xxx = Float32MultiArray()
-            # sp, error, output, p, i , d , 
+            # sp, error, output, p, i , d , pitch
             xxx.data = [self.__set_point, 
                         self.controller.error, 
                         effort,
                         self.controller.out_p,
                         self.controller.out_i,
-                        self.controller.out_d
+                        self.controller.out_d,
+                        pitch
                         ]
             self.pub_pid_output.publish(xxx)
 

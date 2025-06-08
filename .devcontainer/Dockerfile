@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-jazzy-ros-gz-bridge \
     ros-jazzy-ros-gz-image \
     python3-colcon-clean \
+    ros-jazzy-rmw-cyclonedds-cpp \
+    ros-jazzy-plotjuggler-ros \
   && rm -rf /var/lib/apt/lists/*
 
 
